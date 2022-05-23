@@ -21,7 +21,7 @@ return new class extends Migration
             $table->json('no_visibility_list')->nullable();
             // $table->json('segnalazioni')->nullable();
             // $table->json('tags')->nullable();
-            table->integer('proprietario');
+            $table->integer('proprietario');
             $table->timestamps();
         });
     }

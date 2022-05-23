@@ -28,7 +28,15 @@
             @enderror
           </div>
           
-          <button type="submit" name="button">Save</button>
+
+          @foreach($tags as $tag)
+          <div class="mb-3">
+            <label for="">#{{$tag->name}}</label>
+            <input type="checkbox" name="tag_ids[]" class="switch-input" value="{{$tag->id}}" {{ old('tag') ? 'checked="checked"' : '' }}/>
+          </div>
+          @endforeach
+          
+          <button type="submit" class="btn btn-primary" name="button">Save</button>
         </form>
       </div>
     </div>

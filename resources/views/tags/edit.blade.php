@@ -17,7 +17,7 @@
           @endif
       </div>
       <div class="col-md-8">
-        <form class="crea" action="{{route('admin.tags.update', ['tag' => $tag->id])}}" method="post">
+        <form class="crea" action="{{route('tags.update', ['tag' => $tag->id])}}" method="post">
           @csrf
           @method('PATCH')
           <div class="mb-3">
@@ -27,7 +27,7 @@
               <small class="text-danger">{{ $message }}</small>
             @enderror
           </div>
-          <button type="submit" name="button">Save</button>
+          <button class="btn btn-danger" type="submit" name="button">Save</button>
         </form>
       </div>
     </div>

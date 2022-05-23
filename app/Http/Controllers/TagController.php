@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Str;
 class TagController extends Controller
 {
     /**
@@ -83,7 +84,7 @@ class TagController extends Controller
         $data = $request->all();
         $data['slug'] = $this->genSlug($data['name'], $data['name'] != $tag->name, $tag->slug) ;
         $tag->update($data);
-        return redirect()->route('admin.tags.index');
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -95,7 +96,7 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
       $tag->delete();
-      return redirect()->route('admin.tags.index');
+      return redirect()->route('tags.index');
     }
     
     private function genSlug(string $title, bool $change = true, string $old_slug = '')

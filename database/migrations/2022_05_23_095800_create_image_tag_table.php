@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tag_image', function (Blueprint $table) {
+        Schema::create('image_tag', function (Blueprint $table) {
             $table->unsignedBigInteger('image_id');
             $table->foreign('image_id')->references('id')->on('images');
             $table->unsignedBigInteger('tag_id');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tag_image');
+        Schema::dropIfExists('image_tag');
     }
 };

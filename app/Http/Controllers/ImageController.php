@@ -39,7 +39,7 @@ class ImageController extends Controller
     public function create()
     {
         $tags = Tag ::all();
-        return view('images.create', compact('categories', 'tags'));
+        return view('images.create', compact('tags'));
     }
 
     /**
@@ -52,13 +52,14 @@ class ImageController extends Controller
     {
         $request->validate([
             'cover' => 'required|image|max:60000', 
-            'tags_ids.*'=> 'exists:tags,id'
+            'tag_ids.*'=> 'exists:tags,id'
           ]);
         
        
         $data = $request->all();
+        $user_proprietario_id = Auth::user()->id;
         $image = new Image();
-        $image->proprietario = user_proprietario_id;
+        $image->proprietario = $user_proprietario_id;
         if (array_key_exists('cover', $data)) {
             $cover = $data['cover'];
             $destination = 'immagini/thumb/';
@@ -66,12 +67,8 @@ class ImageController extends Controller
             $upload = $cover->move($destination, $filename);
             $data['cover'] = $destination . $filename;
         }
-        if (array_key_exists('tag_ids', $data)) {
-            $image->tags()->attach($data['tag_ids']);
-          }
        
         $users_list = DB::table('users')->get();
-        $user_proprietario_id = Auth::user()->id;
         $visibility_users = array();
         $n_utenti = count($users_list);
         $j = 0;
@@ -99,7 +96,9 @@ class ImageController extends Controller
         // if (array_key_exists('users_ids', $data)) {
         //     $image->users()->attach($data['users_ids']);
         // }
-        
+        if (array_key_exists('tag_ids', $data)) {
+            $image->tags()->attach($data['tag_ids']);
+          }
         $image->users()->attach($visibility_users);
         return redirect()->route('images.index');
     }
@@ -112,7 +111,9 @@ class ImageController extends Controller
      */
     public function show(Image $image)
     {
-        
+        $tags = Tag::all();
+
+        return view('images.show',compact('image','tags'));
     }
 
     /**
@@ -121,7 +122,7 @@ class ImageController extends Controller
      * @param  \App\Models\Image  $image
      * @return \Illuminate\Http\Response
      */
-    public function edit(Image $image)
+    private function edit(Image $image)
     {
         //
     }
@@ -151,8 +152,8 @@ class ImageController extends Controller
                 $image->tags()->sync($data['tag_ids']);
               } else {
                 $post->tags()->detach();
-            $image->update($data);
-  
+                $image->update($data);
+              }
             if(array_key_exists('no_visibility_list', $image)){
               $image->services()->sync($data['service_ids']);
           } else {
@@ -160,7 +161,7 @@ class ImageController extends Controller
           }
             return redirect()->route('images.index', compact('image'));
     }
-
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -170,7 +171,7 @@ class ImageController extends Controller
     public function destroy(Image $image)
     {
         $image->delete();
-        return redirect()->route('imagess.index');
+        return redirect()->route('images.index');
     }
     public function share(Request $request, Image $image)
     {

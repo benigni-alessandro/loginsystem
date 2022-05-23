@@ -27,6 +27,9 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])
 ->group(function () {
+    Route::resource('roles', 'App\Http\Controllers\RoleController');
+    Route::resource('users', 'App\Http\Controllers\UserController');
+    Route::resource('tags', 'App\Http\Controllers\TagController');
     Route::patch('images/share/{image}', 'App\Http\Controllers\ImageController@share')->name('images.share'); 
     Route::resource('images', 'App\Http\Controllers\ImageController'); 
 });

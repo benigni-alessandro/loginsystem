@@ -33,7 +33,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
+                        <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>
+                        <li><a class="nav-link" href="{{ route('images.index') }}">Manage Images</a></li>
+                        <li><a class="nav-link" href="{{ route('tags.index') }}">Manage Tags</a></li>
+                        <li class="nav-item dropdown">
                     </ul>
 
                     <!-- Right Side Of Navbar -->
