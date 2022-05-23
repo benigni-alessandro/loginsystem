@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('confirmed')->default(0);
             $table->string('code_confirmation')->nullable();
+            $table->integer('credito')->default(0);
+            $table->integer('n_post_caricati')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

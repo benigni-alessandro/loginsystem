@@ -31,7 +31,9 @@ Route::middleware(['auth', 'verified'])
     Route::resource('roles', 'App\Http\Controllers\RoleController');
     Route::resource('users', 'App\Http\Controllers\UserController');
     Route::resource('tags', 'App\Http\Controllers\TagController');
-    Route::patch('images/share/{image}', 'App\Http\Controllers\ImageController@share')->name('images.share'); 
+    Route::patch('images/share/{image}', 'App\Http\Controllers\ImageController@share')->name('images.share');
+    Route::get('images/ord/', 'App\Http\Controllers\ImageController@ordenar')->name('images.ordenar');
+    Route::post('images/searched/', 'App\Http\Controllers\ImageController@searchperhashtag')->name('images.searchperhashtag');  
     Route::resource('images', 'App\Http\Controllers\ImageController'); 
 });
 

@@ -50,4 +50,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function images() {
         return $this->belongsToMany('App\Models\Image');
     }
+    
+    public function credits()
+   {
+    return $this->belongsTo('App\Models\Credit');
+   }
 }

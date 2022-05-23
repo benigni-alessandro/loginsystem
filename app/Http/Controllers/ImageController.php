@@ -27,7 +27,7 @@ class ImageController extends Controller
         ->select('*')
         ->where('user_id', '=',  Auth::user()->id)
         ->get();
-       
+        
         return view('images.index', compact('images'));
     }
 
@@ -100,6 +100,7 @@ class ImageController extends Controller
             $image->tags()->attach($data['tag_ids']);
           }
         $image->users()->attach($visibility_users);
+        User::update(user_proprietario_id);
         return redirect()->route('images.index');
     }
 
@@ -212,4 +213,86 @@ class ImageController extends Controller
         return redirect()->route('images.index');
     }
 
+    public function ordenar(){
+        $immagini= DB::table('images')
+        ->join('image_user', 'images.id', '=', 'image_user.image_id')
+        ->join('users', 'image_user.user_id', '=', 'users.id')
+        ->select('*')
+        ->where('user_id', '=',  Auth::user()->id)
+        ->get();
+
+        $i =  0;
+        $image_date = array();
+        $image_list = array();
+        foreach ($immagini as $image){
+            array_push($image_list, $image);
+        }
+        foreach ($immagini as $image){
+            array_push($image_date, $image->created_at);
+        }
+        sort($image_date, SORT_STRING);
+        $images=array();
+        for($j=0; $j<count($image_date); $j++){
+            for($k = 0; $k<count($image_date); $k++) {
+                if(strtotime($image_date[$j]) == strtotime($image_list[$k]->created_at)){
+                    if (in_array($image_list[$k], $images)){
+
+                    }else{
+                        array_push($images, $image_list[$k]);
+                    }
+                   
+
+                }
+            }
+            
+        } 
+        return view('images.index', compact('images'));
+    }
+    public function searchperhashtag(Request $request,Tag $tag){
+        $request->validate([
+            'tag' => 'required|string',
+          ]);
+        $immagini= DB::table('images')
+        ->join('image_user', 'images.id', '=', 'image_user.image_id')
+        ->join('users', 'image_user.user_id', '=', 'users.id')
+        ->select('*')
+        ->where('user_id', '=',  Auth::user()->id)
+        ->join('image_tag', 'images.id', '=', 'image_tag.image_id')
+        ->get();
+        $images_ids = array();
+        foreach ($immagini as $image){
+            array_push($images_ids, $image->image_id);           
+        }
+        $imageslist= array();
+        foreach ($images_ids as $image){
+            if (in_array($image, $imageslist)){
+
+            }else{
+                array_push($imageslist, $image);
+            }           
+        }
+        $images = $this->searchimage($imageslist);
+
+        
+
+        return view('images.index', compact('images'));
+    }
+
+    private function searchimage($images){
+        $immagini = DB::table('images')
+        ->join('image_user', 'images.id', '=', 'image_user.image_id')
+        ->join('users', 'image_user.user_id', '=', 'users.id')
+        ->select('*')
+        ->where('user_id', '=',  Auth::user()->id)
+        ->get();
+        $images_list = array();
+        foreach ($immagini as $image){
+            foreach ($images as $id){
+                if($image->image_id == $id){
+                    array_push($images_list, $image);
+                }
+            }           
+        }        
+        return $images_list;
+    }
 }

@@ -134,4 +134,27 @@ class UserController extends Controller
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
     }
+    public function updatecredit($id)
+    {
+       
+        $user = User::find($id);
+        $credit = $user->credito + 1;
+        $image->update([
+            "credito" => $credit
+        ]);
+    }
+    public function updateimgnum($id)
+    {
+       
+        $user = User::find($id);
+        $n_post_caricati = $user->n_post_caricati + 1;
+        $image->update([
+            "n_post_caricati" => $n_post_caricati
+        ]);
+        if(n_post_caricati == 3){
+            self->updatecredit($id);
+        }
+                   
+    }
+
 }

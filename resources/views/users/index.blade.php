@@ -4,16 +4,18 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Users Management</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
-        </div>
-    </div>
-   
+<div class="container" style="margin-bottom:50px;"">
+  <div class="row">
+      <div class="col-lg-8 margin-tb">
+          <div class="pull-left">
+              <h2>Users Management</h2>
+          </div>
+          <div class="pull-right">
+              <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+          </div>
+      </div>
+    
+  </div>
 </div>
 
 
@@ -24,7 +26,10 @@
 @endif
 
 
-<table class="table table-bordered">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+    <table class="table table-bordered">
  <tr>
    <th>No</th>
    <th>Name</th>
@@ -51,10 +56,15 @@
         {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
             {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
         {!! Form::close() !!}
+        <a class="btn btn-warning" href="{{ route('users.show',$user->id) }}">Vote</a>
     </td>
   </tr>
  @endforeach
 </table>
+    </div>
+  </div>
+
+</div>
 
 {!! $data->render() !!}
 
