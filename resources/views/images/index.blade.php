@@ -7,7 +7,7 @@
         <a class="btn btn-primary" style="margin:10px;" href="{{route('images.create')}}">Posta una nuova immagine</a>
         <a class="btn btn-danger" style="margin:10px;" href="{{route('images.ordenar')}}">Ordinare per data</a>
         @if(Auth::user()->credito != 0)
-        <a class="btn btn-warning" style="margin:10px;" href="">Compra</a>
+        <a class="btn btn-danger" style="margin:10px;" href="">Compra</a>
         @endif
       </div>
       <div class="col-md-12 justify-content-center" style="display: flex">    
@@ -19,7 +19,7 @@
             @error('tag')
               <small class="text-danger">{{ $message }}</small>
             @enderror
-            <button class="btn btn-info" type="submit" name="button">Cerca</button>
+            <button class="btn btn-danger" type="submit" name="button">Cerca</button>
           </div>
         </form>
       </div>
@@ -38,7 +38,7 @@
               <h5 class="card-title text-center"><i class="fas fa-home"></i>{{$image->image_id}}</h5>
 
               <div class="commands mt-20" style= "display: flex; justify-content:center; flex-direction:row; text-align:center">
-                <a href="{{route('images.edit', ['image'=>$image->id])}}" class="btn btn-warning">Modifica</a>
+                <a href="" class="btn btn-warning">Modifica</a>
                 <form class="delete" action="{{route('images.destroy', ['image'=>$image->id])}}" method="post">
                 @csrf
                 @method('DELETE')

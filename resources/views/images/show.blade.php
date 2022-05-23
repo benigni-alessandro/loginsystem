@@ -74,15 +74,36 @@
   <?php 
       ?>
     <label for="exampleFormControlInput1" class="form-label"></label>
-    <input type="text" class="form-control-file @error('user_id_image') is-invalid @enderror" id="user_id_image" name="user_id_image" value="{{$proprietario->id}}">
+    <input type="hidden" class="form-control-file @error('user_id_image') is-invalid @enderror" id="user_id_image" name="user_id_image" value="{{$proprietario->id}}">
     @error('user_id_image')
     <small class="text-danger">{{ $message }}</small>
     @enderror
   </div>
   <button class="btn btn-primary" type="submit" name="button">Segnala</button>
 </form>
+</div>
+</div>
+    <div class="col-md-8"style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <p style="display:flex; flex-direction:row; align-items:center; justify-content:center;">
+    <a class="btn btn-warning" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse">
+      Vota
+    </a>
+    </p>
+    <div class="collapse col-md-4"style="width:100%;" id="collapse">
+    <div class="input-group mb-3" style="width:100%; justify-content:center;">
+        <div class="input-group-prepend">
+          <a class="btn btn-success" type="button">Scegli</a>
+        </div>
+        <select name="vote"  value="{{$vote->voto}}"class="custom-select" id="inputGroupSelect03">
+          <option selected>Choose...</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
       </div>
     </div>
+  </div>
+</div>
 
   
 @endsection
