@@ -7,7 +7,7 @@
         <a class="btn btn-primary" style="margin:10px;" href="{{route('images.create')}}">Posta una nuova immagine</a>
         <a class="btn btn-danger" style="margin:10px;" href="{{route('images.ordenar')}}">Ordinare per data</a>
         @if(Auth::user()->credito != 0)
-        <a class="btn btn-danger" style="margin:10px;" href="{{route('images.ordenar')}}">Compra</a>
+        <a class="btn btn-warning" style="margin:10px;" href="">Compra</a>
         @endif
       </div>
       <div class="col-md-12 justify-content-center" style="display: flex">    
@@ -19,7 +19,7 @@
             @error('tag')
               <small class="text-danger">{{ $message }}</small>
             @enderror
-            <button class="btn btn-danger" type="submit" name="button">Cerca</button>
+            <button class="btn btn-info" type="submit" name="button">Cerca</button>
           </div>
         </form>
       </div>
