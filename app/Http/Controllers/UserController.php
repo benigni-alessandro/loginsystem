@@ -139,20 +139,29 @@ class UserController extends Controller
        
         $user = User::find($id);
         $credit = $user->credito + 1;
-        $image->update([
-            "credito" => $credit
+        $user->credito = $credit;
+        $n_post_caricati = $user->n_post_caricati + 1;
+        $user->n_post_caricati = $n_post_caricati;
+        $user->update([
+            "credito" => $credit,
+            "n_post_caricati" => $n_post_caricati
         ]);
+        $user->save();
     }
     public function updateimgnum($id)
     {
        
         $user = User::find($id);
         $n_post_caricati = $user->n_post_caricati + 1;
-        $image->update([
-            "n_post_caricati" => $n_post_caricati
-        ]);
-        if(n_post_caricati == 3){
-            self->updatecredit($id);
+        $user->n_post_caricati = $n_post_caricati;
+        
+        if($n_post_caricati == 3){
+            $this->updatecredit($id);
+        }else{
+            $user->update([
+                "n_post_caricati" => $n_post_caricati
+            ]);
+            $user->save();
         }
                    
     }

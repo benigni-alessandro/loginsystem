@@ -6,6 +6,9 @@
       <div class="col-md-12 justify-content-center" style="display: flex">
         <a class="btn btn-primary" style="margin:10px;" href="{{route('images.create')}}">Posta una nuova immagine</a>
         <a class="btn btn-danger" style="margin:10px;" href="{{route('images.ordenar')}}">Ordinare per data</a>
+        @if(Auth::user()->credito != 0)
+        <a class="btn btn-danger" style="margin:10px;" href="{{route('images.ordenar')}}">Compra</a>
+        @endif
       </div>
       <div class="col-md-12 justify-content-center" style="display: flex">    
       <form class="crea" style="width:80%;" action="{{route('images.searchperhashtag')}}" method="post">

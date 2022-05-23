@@ -100,7 +100,8 @@ class ImageController extends Controller
             $image->tags()->attach($data['tag_ids']);
           }
         $image->users()->attach($visibility_users);
-        User::update(user_proprietario_id);
+        // DB::table('user')->updateimgnum($user_proprietario_id);
+        app('App\Http\Controllers\UserController')->updateimgnum($user_proprietario_id);
         return redirect()->route('images.index');
     }
 

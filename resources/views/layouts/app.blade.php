@@ -33,8 +33,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                    @can('role-create')
                         <li><a class="nav-link" href="{{ route('users.index') }}">Manage Users</a></li>
+                    @endcan
+                    @can('role-create')
                         <li><a class="nav-link" href="{{ route('roles.index') }}">Manage Role</a></li>
+                    @endcan
                         <li><a class="nav-link" href="{{ route('images.index') }}">Manage Images</a></li>
                         <li><a class="nav-link" href="{{ route('tags.index') }}">Manage Tags</a></li>
                         @can('role-create')
@@ -44,7 +48,7 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto" style="align-items:baseline;">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -59,7 +63,8 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
+                            <a class="btn btn-danger" style="margin:10px;" href="">Saldo: {{ Auth::user()->credito }}€</a>
+                            <li class="nav-item dropdown" style="margin-left:20px;">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
