@@ -83,6 +83,20 @@
 </form>
 </div>
 </div>
+<?php 
+    use Illuminate\Support\Facades\DB;
+     $voted= DB::table('images')
+     ->join('vote_image', 'images.id', '=', 'vote_image.image_id')
+     ->join('votes', 'vote_image.vote_id', '=', 'votes.id')
+     ->select('*')
+     ->where('whovoted', '=', Auth::user()->id)
+     ->where('image_id', '=', $image->id)
+     ->get(); 
+     $voted = json_encode($voted);
+    
+
+     ?>
+    @if($voted != '[]')
     <div class="col-md-8"style="display:flex; flex-direction:column; align-items:center; justify-content:center;">
     <p style="display:flex; flex-direction:row; align-items:center; justify-content:center;">
     <a class="btn btn-warning" data-toggle="collapse" href="#collapse" role="button" aria-expanded="false" aria-controls="collapse">
@@ -91,19 +105,40 @@
     </p>
     <div class="collapse col-md-4"style="width:100%;" id="collapse">
     <div class="input-group mb-3" style="width:100%; justify-content:center;">
+    <form class="creamsg mt-20 " action="{{route('vote.store')}}" method="post" enctype="multipart/form-data">
+      @csrf
+      @method('POST')
+      <div class="mb-8">
+        <input type="hidden" class="form-control @error('whovoted') is-invalid @enderror" id="whovoted" name="whovoted" value="{{Auth::user()->id}}">
+        @error('whovoted')
+        <small class="text-danger">{{ $message }}</small>
+        @enderror
+      </div>
+      <div class="mb-8">
+        <input type="hidden" class="form-control @error('id_image') is-invalid @enderror" id="id_image" name="id_image" value="{{$image->id}}">
+        @error('id_image')
+        <small class="text-danger">{{ $message }}</small>
+        @enderror
+      </div>
+      <div class="mb-8" style="display:flex; flec-direction:row; text-align:center; margin:30px;" >
         <div class="input-group-prepend">
           <a class="btn btn-success" type="button">Scegli</a>
         </div>
-        <select name="vote"  value="{{$vote->voto}}"class="custom-select" id="inputGroupSelect03">
+        <select name="voto" class="form-control" id="inputGroupSelect03">
           <option selected>Choose...</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>
+      </div> 
+      <button class="btn btn-primary" type="submit" name="button">Invia voto</button>
+    </form>
       </div>
     </div>
   </div>
 </div>
-
+@endif
   
 @endsection

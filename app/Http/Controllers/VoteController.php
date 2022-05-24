@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vote;
+use App\Models\User;
 use Illuminate\Http\Request;
+use DB;
+use Illuminate\Support\Facades\Auth;
 
 class VoteController extends Controller
 {
@@ -35,8 +38,22 @@ class VoteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'voto' => 'required|integer|min:1|digits_between: 1,5',
+          ]);
+          $data = $request->all();
+          $vote = new Vote();
+          $user_proprietario_id = Auth::user()->id;
+          $vote->create($data);
+          $vote->whovoted = $user_proprietario_id;
+          $vote->fill($data);
+          $vote->save();
+          if (array_key_exists('id_image', $data)) {
+              $vote->images()->attach($data['id_image']);
+            }
+          return redirect()->route('images.index');
     }
+    
 
     /**
      * Display the specified resource.

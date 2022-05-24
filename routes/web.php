@@ -27,7 +27,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'verified'])
 ->group(function () {
-   
+    Route::resource('vote', 'App\Http\Controllers\VoteController');
     Route::resource('reports', 'App\Http\Controllers\ReportController');
     Route::resource('roles', 'App\Http\Controllers\RoleController');
     Route::resource('users', 'App\Http\Controllers\UserController');

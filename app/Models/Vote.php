@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Vote extends Model
 {
     protected $fillable = [
-        'voto'
+        'voto',
+        'whovoted'
     ];
+    public function images() {
+        return $this->belongsToMany('App\Models\Image', 'vote_image');
+    }
 }
